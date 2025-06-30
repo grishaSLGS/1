@@ -1,0 +1,1011 @@
+Структура проекта (все файлы в одной папке)
+text
+EducationalInstitutionsApp/
+├── Database.cs        # Класс работы с БД
+├── Institution.cs     # Модель данных
+├── MainForm.cs        # Главная форма
+├── MainForm.Designer.cs
+├── MainForm.resx
+├── InstitutionForm.cs # Форма добавления/редактирования
+├── InstitutionForm.Designer.cs
+├── InstitutionForm.resx
+├── AddressBookForm.cs # Справочник адресов
+├── AddressBookForm.Designer.cs
+├── AddressBookForm.resx
+├── DetailsForm.cs     # Форма просмотра подробностей
+├── DetailsForm.Designer.cs
+├── DetailsForm.resx
+└── Program.cs         # Точка входа
+Названия всех элементов интерфейса
+1. Главная форма (MainForm)
+Элементы:
+
+toolStripMain - панель инструментов
+
+btnAdd - кнопка "Добавить"
+
+btnEdit - кнопка "Редактировать"
+
+btnDelete - кнопка "Удалить"
+
+btnRefresh - кнопка "Обновить"
+
+btnDetails - кнопка "Подробности"
+
+panelSearch - панель поиска
+
+txtSearch - поле ввода для поиска
+
+btnSearch - кнопка "Найти"
+
+dataGridView - таблица с учебными заведениями
+
+Колонки:
+
+colId (Visible = false)
+
+colName - "Название"
+
+colType - "Тип"
+
+colAddress - "Адрес"
+
+colDirector - "Директор"
+
+colPhone - "Телефон"
+
+colEmail - "Email"
+
+colWebsite - "Веб-сайт"
+
+colImagePath (Visible = false)
+
+colRegDate (Visible = false)
+
+2. Форма добавления/редактирования (InstitutionForm)
+Элементы:
+
+lblName - метка "Название:"
+
+txtName - поле ввода названия
+
+lblType - метка "Тип:"
+
+cmbType - выпадающий список с вариантами: "Школа", "Колледж", "Университет", "Лицей", "Гимназия"
+
+lblAddress - метка "Адрес:"
+
+txtAddress - поле ввода адреса
+
+btnAddressBook - кнопка "Справочник адресов"
+
+lblDirector - метка "Директор:"
+
+txtDirector - поле ввода директора
+
+lblPhone - метка "Телефон:"
+
+txtPhone - поле ввода телефона
+
+lblEmail - метка "Email:"
+
+txtEmail - поле ввода email
+
+lblWebsite - метка "Веб-сайт:"
+
+txtWebsite - поле ввода веб-сайта
+
+lblImage - метка "Изображение:"
+
+btnSelectImage - кнопка "Выбрать изображение"
+
+picImage - PictureBox для отображения изображения
+
+btnSave - кнопка "Сохранить"
+
+btnCancel - кнопка "Отмена"
+
+3. Справочник адресов (AddressBookForm)
+Элементы:
+
+dataGridView - таблица адресов
+
+Колонки:
+
+colCountry - "Страна"
+
+colRegion - "Регион"
+
+colCity - "Город"
+
+colStreet - "Улица"
+
+colHouse - "Дом"
+
+btnSelect - кнопка "Выбрать"
+
+btnCancel - кнопка "Отмена"
+
+4. Форма просмотра подробностей (DetailsForm)
+Элементы:
+
+lblName - метка "Название:"
+
+lblNameValue - значение названия
+
+lblType - метка "Тип:"
+
+lblTypeValue - значение типа
+
+lblAddress - метка "Адрес:"
+
+lblAddressValue - значение адреса
+
+lblDirector - метка "Директор:"
+
+lblDirectorValue - значение директора
+
+lblPhone - метка "Телефон:"
+
+lblPhoneValue - значение телефона
+
+lblEmail - метка "Email:"
+
+lblEmailValue - значение email
+
+lblWebsite - метка "Веб-сайт:"
+
+lblWebsiteValue - значение веб-сайта
+
+lblRegDate - метка "Дата регистрации:"
+
+lblRegDateValue - значение даты регистрации
+
+picImage - PictureBox для изображения
+
+btnClose - кнопка "Закрыть"
+
+Инструкция по созданию интерфейса:
+Создайте новый проект Windows Forms в Visual Studio
+
+Для каждой формы:
+
+Добавьте новый Form (ПКМ по проекту → Добавить → Форма Windows Forms)
+
+Перетащите элементы из Toolbox на форму
+
+Задайте имена элементам как указано выше
+
+Настройте свойства (текст, размеры, привязки)
+
+Для таблиц (DataGridView):
+
+Добавьте колонки через редактор колонок (Column Editor)
+
+Задайте имена колонкам как указано
+
+Настройте HeaderText (заголовки)
+
+Скопируйте код из предыдущего ответа в соответствующие файлы
+
+Добавьте NuGet пакет System.Data.SQLite
+
+Запустите приложение
+
+Все элементы интерфейса теперь имеют стандартные имена, которые используются в коде. Вы можете создать их визуально в дизайнере форм, а логика работы уже реализована в предоставленном коде.
+
+Так же напиши весь код
+Вот полный код приложения для работы с учебными заведениями на C# (Windows Forms) со всеми формами и логикой:
+
+1. Файл Program.cs (точка входа)
+
+using System;
+using System.Windows.Forms;
+
+namespace EducationalInstitutionsApp
+{
+    static class Program
+    {
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
+        }
+    }
+}
+2. Файл Institution.cs (модель данных)
+
+namespace EducationalInstitutionsApp
+{
+    public class Institution
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Address { get; set; }
+        public string Director { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Website { get; set; }
+        public string ImagePath { get; set; }
+        public string RegistrationDate { get; set; }
+    }
+}
+3. Файл Database.cs (работа с БД)
+
+using System.Data.SQLite;
+using System.Collections.Generic;
+
+namespace EducationalInstitutionsApp
+{
+    public class Database
+    {
+        private SQLiteConnection connection;
+        private string dbPath = "educational_institutions.db";
+
+        public Database()
+        {
+            connection = new SQLiteConnection($"Data Source={dbPath};Version=3;");
+            CreateTables();
+        }
+
+        private void CreateTables()
+        {
+            using (var cmd = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                
+                cmd.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS institutions (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        name TEXT NOT NULL,
+                        type TEXT,
+                        address TEXT,
+                        director TEXT,
+                        phone TEXT,
+                        email TEXT,
+                        website TEXT,
+                        image_path TEXT,
+                        registration_date TEXT
+                    )";
+                cmd.ExecuteNonQuery();
+                
+                cmd.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS addresses (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        country TEXT,
+                        region TEXT,
+                        city TEXT,
+                        district TEXT,
+                        street TEXT,
+                        house TEXT,
+                        apartment TEXT,
+                        postal_code TEXT
+                    )";
+                cmd.ExecuteNonQuery();
+                
+                connection.Close();
+            }
+        }
+
+        public int AddInstitution(Institution institution)
+        {
+            using (var cmd = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                cmd.CommandText = @"
+                    INSERT INTO institutions 
+                    (name, type, address, director, phone, email, website, image_path, registration_date)
+                    VALUES (@name, @type, @address, @director, @phone, @email, @website, @imagePath, date('now'));
+                    SELECT last_insert_rowid();";
+                
+                cmd.Parameters.AddWithValue("@name", institution.Name);
+                cmd.Parameters.AddWithValue("@type", institution.Type);
+                cmd.Parameters.AddWithValue("@address", institution.Address);
+                cmd.Parameters.AddWithValue("@director", institution.Director);
+                cmd.Parameters.AddWithValue("@phone", institution.Phone);
+                cmd.Parameters.AddWithValue("@email", institution.Email);
+                cmd.Parameters.AddWithValue("@website", institution.Website);
+                cmd.Parameters.AddWithValue("@imagePath", institution.ImagePath);
+                
+                int id = Convert.ToInt32(cmd.ExecuteScalar());
+                connection.Close();
+                return id;
+            }
+        }
+
+        public void UpdateInstitution(Institution institution)
+        {
+            using (var cmd = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                cmd.CommandText = @"
+                    UPDATE institutions 
+                    SET name=@name, type=@type, address=@address, director=@director, 
+                        phone=@phone, email=@email, website=@website, image_path=@imagePath
+                    WHERE id=@id";
+                
+                cmd.Parameters.AddWithValue("@id", institution.Id);
+                cmd.Parameters.AddWithValue("@name", institution.Name);
+                cmd.Parameters.AddWithValue("@type", institution.Type);
+                cmd.Parameters.AddWithValue("@address", institution.Address);
+                cmd.Parameters.AddWithValue("@director", institution.Director);
+                cmd.Parameters.AddWithValue("@phone", institution.Phone);
+                cmd.Parameters.AddWithValue("@email", institution.Email);
+                cmd.Parameters.AddWithValue("@website", institution.Website);
+                cmd.Parameters.AddWithValue("@imagePath", institution.ImagePath);
+                
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        public void DeleteInstitution(int id)
+        {
+            using (var cmd = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                cmd.CommandText = "DELETE FROM institutions WHERE id=@id";
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        public Institution GetInstitution(int id)
+        {
+            using (var cmd = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                cmd.CommandText = "SELECT * FROM institutions WHERE id=@id";
+                cmd.Parameters.AddWithValue("@id", id);
+                
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new Institution
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Name = reader["name"].ToString(),
+                            Type = reader["type"].ToString(),
+                            Address = reader["address"].ToString(),
+                            Director = reader["director"].ToString(),
+                            Phone = reader["phone"].ToString(),
+                            Email = reader["email"].ToString(),
+                            Website = reader["website"].ToString(),
+                            ImagePath = reader["image_path"].ToString(),
+                            RegistrationDate = reader["registration_date"].ToString()
+                        };
+                    }
+                }
+                connection.Close();
+                return null;
+            }
+        }
+
+        public List<Institution> SearchInstitutions(string searchTerm)
+        {
+            var institutions = new List<Institution>();
+            
+            using (var cmd = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                cmd.CommandText = @"
+                    SELECT * FROM institutions 
+                    WHERE name LIKE @search OR address LIKE @search OR director LIKE @search OR phone LIKE @search";
+                
+                cmd.Parameters.AddWithValue("@search", $"%{searchTerm}%");
+                
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        institutions.Add(new Institution
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Name = reader["name"].ToString(),
+                            Type = reader["type"].ToString(),
+                            Address = reader["address"].ToString(),
+                            Director = reader["director"].ToString(),
+                            Phone = reader["phone"].ToString(),
+                            Email = reader["email"].ToString(),
+                            Website = reader["website"].ToString(),
+                            ImagePath = reader["image_path"].ToString(),
+                            RegistrationDate = reader["registration_date"].ToString()
+                        });
+                    }
+                }
+                connection.Close();
+            }
+            return institutions;
+        }
+
+        public List<Institution> GetAllInstitutions()
+        {
+            var institutions = new List<Institution>();
+            
+            using (var cmd = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                cmd.CommandText = "SELECT * FROM institutions";
+                
+                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        institutions.Add(new Institution
+                        {
+                            Id = Convert.ToInt32(reader["id"]),
+                            Name = reader["name"].ToString(),
+                            Type = reader["type"].ToString(),
+                            Address = reader["address"].ToString(),
+                            Director = reader["director"].ToString(),
+                            Phone = reader["phone"].ToString(),
+                            Email = reader["email"].ToString(),
+                            Website = reader["website"].ToString(),
+                            ImagePath = reader["image_path"].ToString(),
+                            RegistrationDate = reader["registration_date"].ToString()
+                        });
+                    }
+                }
+                connection.Close();
+            }
+            return institutions;
+        }
+
+        public DataTable GetAddresses()
+        {
+            using (var cmd = new SQLiteCommand(connection))
+            {
+                connection.Open();
+                cmd.CommandText = "SELECT * FROM addresses";
+                
+                using (SQLiteDataAdapter da = new SQLiteDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    connection.Close();
+                    return dt;
+                }
+            }
+        }
+
+        public void Close()
+        {
+            if (connection.State != System.Data.ConnectionState.Closed)
+                connection.Close();
+        }
+    }
+}
+4. Файл MainForm.cs (главная форма)
+
+using System;
+using System.Data;
+using System.Windows.Forms;
+
+namespace EducationalInstitutionsApp
+{
+    public partial class MainForm : Form
+    {
+        private Database db;
+
+        public MainForm()
+        {
+            InitializeComponent();
+            db = new Database();
+            LoadInstitutions();
+        }
+
+        private void LoadInstitutions()
+        {
+            dataGridView.DataSource = db.GetAllInstitutions();
+            dataGridView.Columns["Id"].Visible = false;
+            dataGridView.Columns["ImagePath"].Visible = false;
+            dataGridView.Columns["RegistrationDate"].Visible = false;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            using (var form = new InstitutionForm(db))
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                    LoadInstitutions();
+            }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите учебное заведение для редактирования", 
+                    "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int id = (int)dataGridView.SelectedRows[0].Cells["Id"].Value;
+            using (var form = new InstitutionForm(db, id))
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                    LoadInstitutions();
+            }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите учебное заведение для удаления", 
+                    "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Вы уверены, что хотите удалить выбранное учебное заведение?", 
+                "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                int id = (int)dataGridView.SelectedRows[0].Cells["Id"].Value;
+                db.DeleteInstitution(id);
+                LoadInstitutions();
+            }
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadInstitutions();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtSearch.Text))
+            {
+                LoadInstitutions();
+                return;
+            }
+
+            dataGridView.DataSource = db.SearchInstitutions(txtSearch.Text);
+        }
+
+        private void btnDetails_Click(object sender, EventArgs e)
+        {
+            ShowDetails();
+        }
+
+        private void dataGridView_DoubleClick(object sender, EventArgs e)
+        {
+            ShowDetails();
+        }
+
+        private void ShowDetails()
+        {
+            if (dataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите учебное заведение для просмотра", 
+                    "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int id = (int)dataGridView.SelectedRows[0].Cells["Id"].Value;
+            var institution = db.GetInstitution(id);
+            
+            if (institution != null)
+            {
+                using (var form = new DetailsForm(institution))
+                {
+                    form.ShowDialog();
+                }
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            db.Close();
+        }
+    }
+}
+5. Файл InstitutionForm.cs (форма редактирования)
+
+using System;
+using System.Windows.Forms;
+
+namespace EducationalInstitutionsApp
+{
+    public partial class InstitutionForm : Form
+    {
+        private Database db;
+        private int? institutionId;
+        private string imagePath;
+
+        public InstitutionForm(Database database, int? id = null)
+        {
+            InitializeComponent();
+            db = database;
+            institutionId = id;
+            
+            cmbType.Items.AddRange(new object[] { "Школа", "Колледж", "Университет", "Лицей", "Гимназия" });
+            
+            if (id.HasValue)
+            {
+                Text = "Редактирование учебного заведения";
+                LoadInstitutionData();
+            }
+            else
+            {
+                Text = "Добавление учебного заведения";
+            }
+        }
+
+        private void LoadInstitutionData()
+        {
+            var institution = db.GetInstitution(institutionId.Value);
+            if (institution != null)
+            {
+                txtName.Text = institution.Name;
+                cmbType.SelectedItem = institution.Type;
+                txtAddress.Text = institution.Address;
+                txtDirector.Text = institution.Director;
+                txtPhone.Text = institution.Phone;
+                txtEmail.Text = institution.Email;
+                txtWebsite.Text = institution.Website;
+                imagePath = institution.ImagePath;
+                
+                if (!string.IsNullOrEmpty(imagePath))
+                {
+                    try
+                    {
+                        picImage.Image = System.Drawing.Image.FromFile(imagePath);
+                    }
+                    catch { /* Игнорируем ошибки загрузки изображения */ }
+                }
+            }
+        }
+
+        private void btnSelectImage_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    imagePath = openFileDialog.FileName;
+                    picImage.Image = System.Drawing.Image.FromFile(imagePath);
+                }
+            }
+        }
+
+        private void btnAddressBook_Click(object sender, EventArgs e)
+        {
+            using (var form = new AddressBookForm(db))
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    txtAddress.Text = form.SelectedAddress;
+                }
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                MessageBox.Show("Название учебного заведения обязательно", 
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var institution = new Institution
+            {
+                Name = txtName.Text.Trim(),
+                Type = cmbType.SelectedItem?.ToString() ?? "",
+                Address = txtAddress.Text.Trim(),
+                Director = txtDirector.Text.Trim(),
+                Phone = txtPhone.Text.Trim(),
+                Email = txtEmail.Text.Trim(),
+                Website = txtWebsite.Text.Trim(),
+                ImagePath = imagePath
+            };
+
+            if (institutionId.HasValue)
+            {
+                institution.Id = institutionId.Value;
+                db.UpdateInstitution(institution);
+                MessageBox.Show("Данные учебного заведения обновлены", 
+                    "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                db.AddInstitution(institution);
+                MessageBox.Show("Учебное заведение добавлено", 
+                    "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+    }
+}
+6. Файл AddressBookForm.cs (справочник адресов)
+
+using System;
+using System.Data;
+using System.Windows.Forms;
+
+namespace EducationalInstitutionsApp
+{
+    public partial class AddressBookForm : Form
+    {
+        private Database db;
+        public string SelectedAddress { get; private set; }
+
+        public AddressBookForm(Database database)
+        {
+            InitializeComponent();
+            db = database;
+            LoadAddresses();
+        }
+
+        private void LoadAddresses()
+        {
+            dataGridView.DataSource = db.GetAddresses();
+        }
+
+        private void btnSelect_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count > 0)
+            {
+                DataRowView row = (DataRowView)dataGridView.SelectedRows[0].DataBoundItem;
+                SelectedAddress = $"{row["country"]}, {row["region"]}, {row["city"]}, {row["street"]} {row["house"]}";
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Выберите адрес из списка", 
+                    "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+    }
+}
+7. Файл DetailsForm.cs (просмотр подробностей)
+
+using System;
+using System.Windows.Forms;
+
+namespace EducationalInstitutionsApp
+{
+    public partial class DetailsForm : Form
+    {
+        public DetailsForm(Institution institution)
+        {
+            InitializeComponent();
+            DisplayInstitutionDetails(institution);
+        }
+
+        private void DisplayInstitutionDetails(Institution institution)
+        {
+            lblNameValue.Text = institution.Name;
+            lblTypeValue.Text = institution.Type;
+            lblAddressValue.Text = institution.Address;
+            lblDirectorValue.Text = institution.Director;
+            lblPhoneValue.Text = institution.Phone;
+            lblEmailValue.Text = institution.Email;
+            lblWebsiteValue.Text = institution.Website;
+            lblRegDateValue.Text = institution.RegistrationDate;
+
+            if (!string.IsNullOrEmpty(institution.ImagePath))
+            {
+                try
+                {
+                    picImage.Image = System.Drawing.Image.FromFile(institution.ImagePath);
+                }
+                catch { /* Игнорируем ошибки загрузки изображения */ }
+            }
+        }
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+    }
+}
+Инструкция по настройке:
+Создайте новый проект Windows Forms в Visual Studio
+
+Добавьте все эти файлы в проект
+
+Установите NuGet пакет System.Data.SQLite
+
+Создайте формы в дизайнере с элементами управления, используя указанные имена
+
+Запустите приложение
+
+Приложение предоставляет полный функционал для работы с учебными заведениями, включая CRUD операции, поиск, работу с изображениями и справочник адресов.
+
+Как добовлять в справочник адресов адреса?
+Вот как добавить функционал добавления адресов в справочник:
+
+1. Добавьте метод в класс Database.cs
+
+public int AddAddress(string country, string region, string city, string district, 
+                     string street, string house, string apartment, string postalCode)
+{
+    using (var cmd = new SQLiteCommand(connection))
+    {
+        connection.Open();
+        cmd.CommandText = @"
+            INSERT INTO addresses 
+            (country, region, city, district, street, house, apartment, postal_code)
+            VALUES (@country, @region, @city, @district, @street, @house, @apartment, @postalCode);
+            SELECT last_insert_rowid();";
+        
+        cmd.Parameters.AddWithValue("@country", country);
+        cmd.Parameters.AddWithValue("@region", region);
+        cmd.Parameters.AddWithValue("@city", city);
+        cmd.Parameters.AddWithValue("@district", district);
+        cmd.Parameters.AddWithValue("@street", street);
+        cmd.Parameters.AddWithValue("@house", house);
+        cmd.Parameters.AddWithValue("@apartment", apartment);
+        cmd.Parameters.AddWithValue("@postalCode", postalCode);
+        
+        int id = Convert.ToInt32(cmd.ExecuteScalar());
+        connection.Close();
+        return id;
+    }
+}
+2. Создайте форму для добавления адреса (AddAddressForm.cs)
+
+using System;
+using System.Windows.Forms;
+
+namespace EducationalInstitutionsApp
+{
+    public partial class AddAddressForm : Form
+    {
+        private Database db;
+        
+        public AddAddressForm(Database database)
+        {
+            InitializeComponent();
+            db = database;
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtCountry.Text) || 
+                string.IsNullOrWhiteSpace(txtCity.Text) || 
+                string.IsNullOrWhiteSpace(txtStreet.Text))
+            {
+                MessageBox.Show("Заполните обязательные поля (Страна, Город, Улица)", 
+                              "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            db.AddAddress(
+                txtCountry.Text.Trim(),
+                txtRegion.Text.Trim(),
+                txtCity.Text.Trim(),
+                txtDistrict.Text.Trim(),
+                txtStreet.Text.Trim(),
+                txtHouse.Text.Trim(),
+                txtApartment.Text.Trim(),
+                txtPostalCode.Text.Trim()
+            );
+
+            MessageBox.Show("Адрес успешно добавлен", "Успех", 
+                          MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+    }
+}
+3. Модифицируйте AddressBookForm.cs
+
+public partial class AddressBookForm : Form
+{
+    // ... существующий код ...
+
+    private void InitializeComponent()
+    {
+        // ... существующие элементы ...
+        
+        // Добавьте кнопку "Добавить адрес"
+        btnAdd = new Button();
+        btnAdd.Text = "Добавить";
+        btnAdd.Click += btnAdd_Click;
+        // Добавьте btnAdd на форму (например, на панель инструментов)
+    }
+
+    private void btnAdd_Click(object sender, EventArgs e)
+    {
+        using (var form = new AddAddressForm(db))
+        {
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadAddresses(); // Обновляем список после добавления
+            }
+        }
+    }
+}
+4. Добавьте кнопку вызова справочника адресов на главную форму
+В MainForm.cs добавьте:
+
+
+private void btnAddressBook_Click(object sender, EventArgs e)
+{
+    using (var form = new AddressBookForm(db))
+    {
+        form.ShowDialog();
+    }
+}
+5. Дизайн формы AddAddressForm
+Создайте форму с элементами:
+
+txtCountry - Страна
+
+txtRegion - Регион/область
+
+txtCity - Город
+
+txtDistrict - Район
+
+txtStreet - Улица
+
+txtHouse - Дом
+
+txtApartment - Квартира
+
+txtPostalCode - Почтовый индекс
+
+btnSave - Кнопка "Сохранить"
+
+btnCancel - Кнопка "Отмена"
+
+6. Обновите интерфейс AddressBookForm
+Добавьте DataGridView с колонками:
+
+Страна
+
+Регион
+
+Город
+
+Район
+
+Улица
+
+Дом
+
+И кнопки:
+
+"Выбрать" (для выбора адреса)
+
+"Добавить" (для открытия формы добавления)
+
+"Удалить" (опционально)
+
+Теперь пользователи смогут:
+
+Открывать справочник адресов через главную форму
+
+Добавлять новые адреса через кнопку "Добавить"
+
+Выбирать существующие адреса для учебных заведений
